@@ -1,4 +1,4 @@
-import User from "../models/userModel";
+import User from "../models/userModel.js";
 
 
 const generateAccessAndRefreshToken = async(userId) => {
@@ -34,7 +34,7 @@ const registerUser = async(req, res) => {
 
         const{name, email, password} = req.body
 
-        if([name, email, password].some((field) => field.trim() === "")){
+        if ([name, email, password].some((field) => !field || field.trim() === "")) {
             return res.status(400).json({
                 success: false, 
                 message: "Name, email and password fields are required."
@@ -65,10 +65,12 @@ const registerUser = async(req, res) => {
             password
         })
 
+        const registeredUser = await User.findById(user._id).select("-password -refreshToken")
+
         return res.status(201).json({
             success: true,
             message: "New user created successfully.",
-            user
+            user: registeredUser
         })
 
     } catch (error) {
