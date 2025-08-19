@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 
 // Router
 import userRoutes from "./routes/userRoute.js";
+import taskRoutes from "./routes/taskRoute.js"
 
 
 const app = express();
@@ -18,8 +19,10 @@ dotenv.config({
 app.use(express.json());
 app.use(cookieParser());
 
+
 // Router
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/task", taskRoutes);
 
 app.get('/', (req, res) => {
     res.send("Hello this is task manager!")
