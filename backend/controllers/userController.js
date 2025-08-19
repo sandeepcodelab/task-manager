@@ -74,6 +74,7 @@ const registerUser = async(req, res) => {
         })
 
     } catch (error) {
+        console.log("register: ", error)
         return res.status(500).json({
             success: false,
             message: "Something went wrong while creating a user."
@@ -113,7 +114,7 @@ const loginUser = async(req, res) => {
 
         // Check user
         const user = await User.findOne({email})
-        
+
         if(!user){
             return res.status(404).json({
                 success: false, 
@@ -121,7 +122,7 @@ const loginUser = async(req, res) => {
             });
         }
         
-        const checkPassword = isPasswordCorrect(password)
+        const checkPassword = user.isPasswordCorrect(password)
         
         if(!checkPassword){
             return res.status(400).json({
@@ -149,6 +150,7 @@ const loginUser = async(req, res) => {
                 })
 
     } catch (error) {
+        console.log("login: ", error)
         return res.status(500).json({
             success: false,
             message: "Something went wrong while user login."
