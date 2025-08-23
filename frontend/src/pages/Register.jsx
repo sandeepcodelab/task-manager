@@ -14,7 +14,7 @@ function Register() {
   const[errors, setErrors] = useState({})
   const[apiRes, setApiRes] = useState({})
   const[apiErr, setApiErr] = useState({})
-  const[loader, setLoader] = useState(false)
+  const[loading, setLoading] = useState(false)
 
 
   const validate = () => {
@@ -49,7 +49,7 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
+  
     setApiErr({})
     setApiRes({})
     
@@ -57,7 +57,9 @@ function Register() {
     setErrors(formValidation)
     
     if(Object.keys(formValidation).length > 0) return;
-
+    
+    setLoading(true)
+    
     axios.post("/api/v1/user/register",{
       name,
       email,
@@ -69,6 +71,10 @@ function Register() {
     .catch((err) => {
       setApiErr(err.response)
     })
+    .finally(() => {
+      setLoading(false)
+    })
+    
   }
 
   return (
@@ -84,13 +90,11 @@ function Register() {
           </p>
 
           {
-            // console.log(apiErr.data)
             (apiErr?.data?.message) ? <p className="text-red-500 text-center font-bold pb-2">{apiErr?.data?.message}</p> : null
           }
-          {/* {
-            console.log(apiRes.data)
+          {
             (apiRes?.data?.message) ? <p className="text-green-500 text-center font-bold pb-2">{apiRes?.data?.message}</p> : null
-          } */}
+          }
 
           <form className="space-y-5" onSubmit={handleSubmit}>
 
@@ -143,8 +147,37 @@ function Register() {
 
             <Button
               type="submit"
-              text="Sign up"
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 rounded-xl font-semibold hover:shadow-[0_0_15px_rgba(59,130,246,0.7)] transition cursor-pointer"
+              className={`w-full text-white py-3 rounded-xl font-semibold hover:shadow-[0_0_15px_rgba(59,130,246,0.7)] transition ${ loading ? 'bg-gradient-to-r from-blue-500 to-blue-400 cursor-not-allowed' : 'bg-gradient-to-r from-blue-600 to-blue-500 cursor-pointer'}`}
+              disabled={loading}
+              text={
+                loading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      ></path>
+                    </svg>
+                    Sign up
+                  </div>
+                ) : (
+                  "Sign up"
+                )
+              }
             />
 
           </form>
