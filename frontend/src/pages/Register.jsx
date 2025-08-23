@@ -67,6 +67,10 @@ function Register() {
     })
     .then((response) => {
       setApiRes(response)
+      setName("")
+      setEmail("")
+      setPassword("")
+      setConfirmPassword("")
     })
     .catch((err) => {
       setApiErr(err.response)
@@ -103,6 +107,7 @@ function Register() {
                 type="text" 
                 placeholder="Enter your name" 
                 label="Name"
+                value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             
@@ -115,6 +120,7 @@ function Register() {
                 type="email" 
                 placeholder="Enter your email" 
                 label="Email"
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 />
                 
@@ -127,6 +133,7 @@ function Register() {
                 type="password" 
                 placeholder="Enter password" 
                 label="Password"
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               {
@@ -138,6 +145,7 @@ function Register() {
                 type="password" 
                 placeholder="Enter confirm password" 
                 label="Confirm Password"
+                value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
               {
