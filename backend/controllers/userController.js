@@ -122,8 +122,8 @@ const loginUser = async(req, res) => {
             });
         }
         
-        const checkPassword = user.isPasswordCorrect(password)
-        
+        const checkPassword = await user.isPasswordCorrect(password)
+
         if(!checkPassword){
             return res.status(400).json({
                 success: false, 
