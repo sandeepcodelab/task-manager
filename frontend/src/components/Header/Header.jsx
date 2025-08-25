@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "../Container/Container";
 import { Menu, X } from "lucide-react";
 import { Link, NavLink } from "react-router";
 
 function Header() {
+
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user")
+    if(storedUser) setUser(JSON.parse(storedUser))
+
+  }, []);
+
 
   return (
     <header className="backdrop-blur-xl bg-gray-900/80 shadow-md border-b border-gray-700/40 sticky top-0 z-50">
@@ -24,6 +33,15 @@ function Header() {
                 Home
               </NavLink>
             </li>
+            {
+              user ? (
+                <li className="hover:text-blue-400 transition">
+                  <NavLink to="/dashboard" className={ ({isActive}) => isActive ? "text-blue-400" : "text-white" }>
+                    Tasks
+                  </NavLink>
+                </li>
+              ):(null)
+            }
             <li className="hover:text-blue-400 transition">
               <NavLink to="/contact" className={ ({isActive}) => isActive ? "text-blue-400" : "text-white" }>
                 Contact
@@ -43,11 +61,20 @@ function Header() {
 
           {/* Auth Button */}
           <div className="hidden md:block">
-            <Link to="/login">
-              <button className="bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer">
-                Login
-              </button>
-            </Link>
+            { user ? (
+                <Link to="/login">
+                  <button className="bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer">
+                    Logout
+                  </button>
+                </Link>
+              ) : (
+                <Link to="/login">
+                  <button className="bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer">
+                    Login
+                  </button>
+                </Link>
+              )
+            }
           </div>
 
           {/* Mobile Menu Toggle */}
