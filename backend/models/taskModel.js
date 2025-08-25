@@ -9,9 +9,13 @@ const taskSchema = new Schema(
         description: {
             type: String,
         },
+        priority: {
+            type: String,
+            required: true
+        },
         completed: {
-            type: Boolean,
-            default: false,
+            type: String,
+            required: true,
         },
         owner: {
             type: Schema.Types.ObjectId,
