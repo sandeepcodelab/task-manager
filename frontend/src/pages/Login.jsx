@@ -1,7 +1,7 @@
 import Container from "../components/Container/Container";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import axios from "axios";
 
@@ -13,6 +13,8 @@ function Login() {
     const[loading, setLoading] = useState(false);
     const[apiResponse, setApiResponse] = useState({});
     const[apiError, setApiError] = useState({});
+
+    const navigate = useNavigate();
 
     const validate = () => {
 
@@ -52,7 +54,16 @@ function Login() {
             password
         })
         .then((response) => {
+ 
+            localStorage.setItem("token", response?.data?.loggedInUser?.accessToken)
+            localStorage.setItem("user", JSON.stringify(response?.data?.loggedInUser?.loggedInUser))
             setApiResponse(response);
+            setEmail("");
+            setPassword("");
+
+            setTimeout(() => {
+                navigate("/dashboard")
+            }, 2000)
         })
         .catch((err) => {
             setApiError(err.response)
