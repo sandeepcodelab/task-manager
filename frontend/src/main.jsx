@@ -9,6 +9,9 @@ import Register from './pages/Register.jsx'
 import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
 import Help from './pages/Help.jsx'
+import Dashboard from './pages/Dashboard.jsx'
+import AddTask from './pages/AddTask.jsx'
+import UpdateTask from './pages/UpdateTask.jsx'
 
 
 let router = createBrowserRouter([
@@ -39,6 +42,18 @@ let router = createBrowserRouter([
       {
         path: "/help",
         element: <Help />
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />
+      },
+      {
+        path: "/add-task",
+        element: <AddTask />
+      },
+      {
+        path: "/update-task",
+        element: <UpdateTask />
       }
     ]
   }
