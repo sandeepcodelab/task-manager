@@ -11,7 +11,7 @@ const addTask = async(req, res) => {
             })
         }
 
-        const{title, description} = req.body
+        const{title, description, priority, status} = req.body
 
         if(!title){
             return res.status(400).json({
@@ -19,10 +19,24 @@ const addTask = async(req, res) => {
                 message: "Title is required"
             })
         }
+        if(!priority){
+            return res.status(400).json({
+                success: false,
+                message: "Priority is required"
+            })
+        }
+        if(!status){
+            return res.status(400).json({
+                success: false,
+                message: "Status is required"
+            })
+        }
 
         const task = await Task.create({
             title,
             description,
+            priority,
+            status,
             owner: req.user?._id
         })
         
@@ -79,12 +93,24 @@ const updateTask = async(req, res) => {
             })
         }
 
-        const{title, description, completed} = req.body
+        const{title, description, priority, status} = req.body
         
         if(!title){
             return res.status(400).json({
                 success: false,
                 message: "Title is required"
+            })
+        }
+        if(!priority){
+            return res.status(400).json({
+                success: false,
+                message: "Priority is required"
+            })
+        }
+        if(!status){
+            return res.status(400).json({
+                success: false,
+                message: "Status is required"
             })
         }
         
@@ -106,7 +132,8 @@ const updateTask = async(req, res) => {
                 $set: {
                     title: title || task.title,
                     description: description || task.description,
-                    completed: completed !== undefined ? completed : task.completed
+                    priority: priority || task.priority,
+                    status: status || task.status
                 }
             },
             {new: true}
