@@ -2,7 +2,7 @@ function InputField({type="text", placeholder, className, label, ...props}){
 
     return (
         <>
-        <label className="block text-gray-300 font-medium">{label}</label>
+        <label className="block text-white font-medium mb-2">{label}</label>
         <input
             type={type}
             placeholder={placeholder}
