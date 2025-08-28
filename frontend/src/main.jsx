@@ -52,7 +52,7 @@ let router = createBrowserRouter([
         element: <AddTask />
       },
       {
-        path: "/update-task",
+        path: "/update-task/:taskId",
         element: <UpdateTask />
       }
     ]
