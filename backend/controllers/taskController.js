@@ -55,7 +55,7 @@ const addTask = async(req, res) => {
     }
 }
 
-const getTasks = async(req, res) => {
+const allTasks = async(req, res) => {
     try {
         
         const task = await Task.find({owner: req.user?._id})
@@ -78,6 +78,34 @@ const getTasks = async(req, res) => {
         return res.status(500).json({
             success: false,
             message: "Somthing went wrong while fetching tasks.",
+        })
+    }
+}
+
+const getTask = async(req, res) => {
+    try {
+        const taskId = req.params?.id;
+    
+        if(!taskId){
+            return res.status(400).json({
+                success: false,
+                message: "Task id is missing."
+            })
+        }
+    
+        const task = await Task.findById(taskId)
+    
+        return res.status(200).json({
+            status: true,
+            message: "Task fetched successfully.",
+            task
+        })
+
+    } catch (error) {
+        console.log("get task: ", error)
+        return res.status(500).json({
+            success: false,
+            message: "Somthing went wrong while fetching a task.",
         })
     }
 }
@@ -189,7 +217,8 @@ const deleteTask = async(req, res) => {
 
 export {
     addTask,
-    getTasks,
+    allTasks,
+    getTask,
     updateTask,
     deleteTask
 }
