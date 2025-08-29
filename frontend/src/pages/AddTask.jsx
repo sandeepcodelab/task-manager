@@ -9,7 +9,7 @@ function AddTask() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [priority, setPriority] = useState("medium");
-  const [status, setStatus] = useState("inprogress");
+  const [status, setStatus] = useState("in-progress");
   const [titleErr, setTitleErr] = useState("");
   const [apiError, setApiError] = useState({});
   const [loading, setLoading] = useState(false);
