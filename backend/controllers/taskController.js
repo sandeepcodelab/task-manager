@@ -58,19 +58,48 @@ const addTask = async(req, res) => {
 const allTasks = async(req, res) => {
     try {
         
-        const task = await Task.find({owner: req.user?._id})
+        // const tasks = await Task.find({owner: req.user?._id})
 
-        if(!task){
+        const tasks = await Task.aggregate([
+            {
+                $match: {owner: req.user?._id}
+            },
+            {
+                $facet: { 
+                    tasks: [
+                        { $sort: { createdAt: -1} }
+                    ],
+                    totalTasks: [
+                        { $count: "count" }
+                    ],
+                    pending: [ 
+                        { $match: {status: "pending"} },
+                        { $count: "count" } 
+                    ],
+                    completed: [ 
+                        { $match: {status: "completed"} },
+                        { $count: "count" } 
+                    ],
+                }
+            }
+        ])
+
+        if(!tasks[0].tasks){
             return res.status(404).json({
                 success: false,
                 message: "Task not found.",
             })
         }
 
+        // console.log("Aggregation => ", tasks[0].tasks)
+
         return res.status(200).json({
             success: true,
             message: "Tasks fetched successfully.",
-            tasks: task
+            tasks: tasks[0]?.tasks,
+            total: tasks[0]?.totalTasks[0]?.count || 0,
+            pending: tasks[0]?.pending[0]?.count || 0,
+            completed: tasks[0]?.completed[0]?.count || 0,
         })
 
     } catch (error) {
