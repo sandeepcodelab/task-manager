@@ -111,7 +111,7 @@ function AddTask() {
                             className="w-full px-4 py-3 bg-gray-900/60 text-white border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="pending">Pending</option>
-                            <option value="inprogress">In Progress</option>
+                            <option value="in-progress">In-Progress</option>
                             <option value="completed">Completed</option>
                         </select>
                     </div>
