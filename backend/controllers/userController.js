@@ -159,7 +159,42 @@ const loginUser = async(req, res) => {
 }
 
 
+const logoutUser = async(req, res) => {
+    try {
+        const userId = req.user._id
+
+        const user = await User.findByIdAndUpdate(userId, 
+            {
+                $set: {refreshToken: undefined}
+            })
+
+        
+        const options = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production"
+        }
+
+        return res.status(200)
+                .cookie("accessToken", options)
+                .cookie("refreshToken", options)
+                .json({
+                    success: true,
+                    message: "User logout successfully.",
+                    logoutUser: {}
+                })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500)
+                .json({
+                    success: false,
+                    message: "Something went wrong while logging out user."
+                })
+    }
+}
+
 export { 
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser
 }
