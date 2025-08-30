@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Container from "../Container/Container";
 import { Menu, X } from "lucide-react";
 import { Link, NavLink } from "react-router";
+import Button from "../Button";
 
 function Header() {
 
@@ -62,16 +63,18 @@ function Header() {
           {/* Auth Button */}
           <div className="hidden md:block">
             { user ? (
-                <Link to="/login">
-                  <button className="bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer">
-                    Logout
-                  </button>
+                <Link to="/logout">
+                  <Button 
+                    className="bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer"
+                    text="Logout"
+                  />
                 </Link>
               ) : (
                 <Link to="/login">
-                  <button className="bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer">
-                    Login
-                  </button>
+                  <Button 
+                    className="bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer"
+                    text="Login"
+                  />
                 </Link>
               )
             }
@@ -79,9 +82,11 @@ function Header() {
 
           {/* Mobile Menu Toggle */}
           <div className="md:hidden">
-            <button onClick={() => setMenuOpen(!menuOpen)} className="cursor-pointer">
-              {menuOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
+            <Button 
+              onClick={() => setMenuOpen(!menuOpen)} 
+              className="cursor-pointer"
+              icon={menuOpen ? <X size={28} /> : <Menu size={28} />}
+            />
           </div>
         </nav>
 
@@ -110,11 +115,22 @@ function Header() {
                 </NavLink>
               </li>
               <li>
-                <Link to="/login">
-                  <button className="w-full bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer">
-                    Login
-                  </button>
-                </Link>  
+                { user ? (
+                    <Link to="/logout">
+                      <Button 
+                        className="w-full bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl   font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer"
+                        text="Logout"
+                      />
+                    </Link>
+                  ) : (
+                    <Link to="/login">
+                      <Button 
+                        className="w-full bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer"
+                        text="Login"
+                      />
+                    </Link>
+                  )
+                }  
               </li>
             </ul>
           </div>
