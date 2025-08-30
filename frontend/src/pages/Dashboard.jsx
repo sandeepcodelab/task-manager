@@ -22,7 +22,6 @@ function Dashboard() {
             setTotal(res?.data?.total)
             setPending(res?.data?.pending)
             setCompleted(res?.data?.completed)
-            console.log(res?.data)
         })
         .catch((err) => {
             setAllTaskErr(err.response)
