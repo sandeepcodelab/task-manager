@@ -60,9 +60,16 @@ const allTasks = async(req, res) => {
         
         // const tasks = await Task.find({owner: req.user?._id})
 
+        const {status, priority} = req?.query
+
+        const filter = {owner: req.user?._id}
+
+        if(status !== "all") filter.status = status
+        if(priority !== "all") filter.priority = priority
+        
         const tasks = await Task.aggregate([
             {
-                $match: {owner: req.user?._id}
+                $match: filter
             },
             {
                 $facet: { 
