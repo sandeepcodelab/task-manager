@@ -12,6 +12,8 @@ import Help from './pages/Help.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import AddTask from './pages/AddTask.jsx'
 import UpdateTask from './pages/UpdateTask.jsx'
+import Logout from './pages/Logout.jsx'
+import ProtectedRoute from './pages/ProtectedRoute.jsx'
 
 
 let router = createBrowserRouter([
@@ -45,15 +47,35 @@ let router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard />
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        )
       },
       {
         path: "/add-task",
-        element: <AddTask />
+        element: (
+          <ProtectedRoute>
+            <AddTask />
+          </ProtectedRoute>
+        )
       },
       {
         path: "/update-task/:taskId",
-        element: <UpdateTask />
+        element: (
+          <ProtectedRoute>
+            <UpdateTask />
+          </ProtectedRoute>
+          )
+      },
+      {
+        path: "/logout",
+        element: (
+          <ProtectedRoute>
+            <Logout />
+          </ProtectedRoute>
+        )
       }
     ]
   }
