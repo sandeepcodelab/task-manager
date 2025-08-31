@@ -11,13 +11,11 @@ export default function Logout() {
     useEffect(() => {
         axios.post('/api/v1/user/logout')
         .then((res) => {
-            console.log(res)
             localStorage.setItem("token", "")
             localStorage.setItem("user", "")
             navigate('/login')
         })
         .catch((err) => {
-            console.log(err)
             setLogoutErr(err?.response?.data)
         })
     }, [])

@@ -60,10 +60,7 @@ function Login() {
             setApiResponse(response);
             setEmail("");
             setPassword("");
-
-            setTimeout(() => {
-                navigate("/dashboard")
-            }, 2000)
+            navigate("/dashboard")
         })
         .catch((err) => {
             setApiError(err.response)
