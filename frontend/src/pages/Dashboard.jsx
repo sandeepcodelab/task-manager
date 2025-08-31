@@ -7,7 +7,8 @@ import Button from "../components/Button";
 
 function Dashboard() {
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const storedUser = localStorage.getItem("user")
+    const user = storedUser ? JSON.parse(storedUser) : {};
     const [tasks, setTasks] = useState([])
     const [total, setTotal] = useState(0)
     const [pending, setPending] = useState(0)
@@ -15,8 +16,12 @@ function Dashboard() {
     const [allTaskErr, setAllTaskErr] = useState({})
     const [deleteErr, setDeleteErr] = useState({})
 
-    const fetchTask = async () => {
-        axios.get("/api/v1/task/all")
+    const [statusFilter, setStatusFilter] = useState("all");
+    const [priorityFilter, setpriorityFilter] = useState("all");
+
+    
+    const fetchTask = async (statusQuery, priorityQuery) => {
+        axios.get(`/api/v1/task/all?status=${statusQuery}&priority=${priorityQuery}`)
         .then((res) => {
             setTasks(res?.data?.tasks)
             setTotal(res?.data?.total)
@@ -29,18 +34,16 @@ function Dashboard() {
     }
 
     useEffect(() => {
-        fetchTask();
-    }, [])
+        fetchTask(statusFilter, priorityFilter);
+    }, [statusFilter, priorityFilter])
 
-    const [statusFilter, setStatusFilter] = useState("all");
-    const [priorityFilter, setpriorityFilter] = useState("all");
 
     const handleDelete = (id) => {
         if(window.confirm("Are you sure you want to delete this task?")){
 
             axios.delete(`/api/v1/task/delete/${id}`)
             .then((res) => {
-                fetchTask();
+                fetchTask(statusFilter, priorityFilter);
             })
             .catch((err) => {
                 setDeleteErr(err.response)
@@ -124,7 +127,7 @@ function Dashboard() {
                                 <Flag className="w-5 h-5 text-gray-300" />
                                 <select
                                     value={priorityFilter}
-                                    onChange={(e) => setPriorityFilter(e.target.value)}
+                                    onChange={(e) => setpriorityFilter(e.target.value)}
                                     className="bg-gray-700 text-white px-3 py-2 rounded-lg outline-none"
                                 >
                                     <option value="all">All Priority</option>
