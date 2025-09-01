@@ -14,6 +14,8 @@ import AddTask from './pages/AddTask.jsx'
 import UpdateTask from './pages/UpdateTask.jsx'
 import Logout from './pages/Logout.jsx'
 import ProtectedRoute from './pages/ProtectedRoute.jsx'
+import { Provider } from 'react-redux'
+import store from './store/store.js'
 
 
 let router = createBrowserRouter([
@@ -27,11 +29,19 @@ let router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />
+        element: (
+          <ProtectedRoute authentication={false}>
+            <Login />
+          </ProtectedRoute>
+        )
       },
       {
         path: "/signup",
-        element: <Register />
+        element: (
+          <ProtectedRoute authentication={false}>
+            <Register />
+          </ProtectedRoute>
+        )
       },
       {
         path: "/about",
@@ -48,7 +58,7 @@ let router = createBrowserRouter([
       {
         path: "/dashboard",
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute authentication>
             <Dashboard />
           </ProtectedRoute>
         )
@@ -56,7 +66,7 @@ let router = createBrowserRouter([
       {
         path: "/add-task",
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute authentication>
             <AddTask />
           </ProtectedRoute>
         )
@@ -64,7 +74,7 @@ let router = createBrowserRouter([
       {
         path: "/update-task/:taskId",
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute authentication>
             <UpdateTask />
           </ProtectedRoute>
           )
@@ -72,7 +82,7 @@ let router = createBrowserRouter([
       {
         path: "/logout",
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute authentication>
             <Logout />
           </ProtectedRoute>
         )
@@ -84,6 +94,8 @@ let router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 )
