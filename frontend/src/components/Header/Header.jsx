@@ -3,17 +3,14 @@ import Container from "../Container/Container";
 import { Menu, X } from "lucide-react";
 import { Link, NavLink } from "react-router";
 import Button from "../Button";
+import { useSelector } from "react-redux";
+
 
 function Header() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user")
-    if(storedUser) setUser(JSON.parse(storedUser))
-
-  }, []);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
 
 
   return (
@@ -35,13 +32,13 @@ function Header() {
               </NavLink>
             </li>
             {
-              user ? (
+              isAuthenticated && (
                 <li className="hover:text-blue-400 transition">
                   <NavLink to="/dashboard" className={ ({isActive}) => isActive ? "text-blue-400" : "text-white" }>
                     Tasks
                   </NavLink>
                 </li>
-              ):(null)
+              )
             }
             <li className="hover:text-blue-400 transition">
               <NavLink to="/contact" className={ ({isActive}) => isActive ? "text-blue-400" : "text-white" }>
@@ -62,7 +59,7 @@ function Header() {
 
           {/* Auth Button */}
           <div className="hidden md:block">
-            { user ? (
+            { isAuthenticated ? (
                 <Link to="/logout">
                   <Button 
                     className="bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer"
@@ -99,6 +96,15 @@ function Header() {
                   Home
                 </NavLink>
               </li>
+              {
+                isAuthenticated && (
+                  <li className="hover:text-blue-400 transition">
+                    <NavLink to="/dashboard" className={ ({isActive}) => isActive ? "text-blue-400" : "text-white" }>
+                      Tasks
+                    </NavLink>
+                  </li>
+                )
+              }
               <li className="cursor-pointer hover:text-blue-400 transition">
                 <NavLink to="/contact" className={ ({isActive}) => isActive ? "text-blue-400" : "text-white" }>
                   Contact
@@ -115,7 +121,7 @@ function Header() {
                 </NavLink>
               </li>
               <li>
-                { user ? (
+                { isAuthenticated ? (
                     <Link to="/logout">
                       <Button 
                         className="w-full bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-xl   font-semibold text-white hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition cursor-pointer"

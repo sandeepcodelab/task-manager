@@ -1,8 +1,13 @@
 import { Link } from "react-router";
 import Container from "../Container/Container";
 import { Facebook, Instagram, Twitter, Linkedin, Copyright } from "lucide-react";
+import { useSelector } from "react-redux";
+
 
 function Footer() {
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+
   return (
     <footer className="backdrop-blur-xl bg-gray-900/80 border-t border-gray-700/40 mt-10">
       <Container>
@@ -22,6 +27,10 @@ function Footer() {
             <li className="cursor-pointer hover:text-blue-400 transition">
               <Link to="/">Home</Link>
             </li>
+            { isAuthenticated && (<li className="cursor-pointer hover:text-blue-400 transition">
+              <Link to="/dashboard">Tasks</Link>
+            </li>
+            )}
             <li className="cursor-pointer hover:text-blue-400 transition">
               <Link to="/contact">Contact</Link>
             </li>
