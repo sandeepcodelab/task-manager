@@ -2,17 +2,20 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { logout as logoutUser} from "../store/AuthSlice";
+
 
 export default function Logout() {
 
     const navigate = useNavigate();
     const [logoutErr, setLogoutErr] = useState({})
+    const dispatch = useDispatch()
 
     useEffect(() => {
         axios.post('/api/v1/user/logout')
         .then((res) => {
-            localStorage.setItem("token", "")
-            localStorage.setItem("user", "")
+            dispatch(logoutUser())
             navigate('/login')
         })
         .catch((err) => {

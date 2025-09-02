@@ -4,15 +4,19 @@ import Button from "../components/Button";
 import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login as authLogin } from "../store/AuthSlice";
+
 
 function Login() {
 
-    const[email, setEmail] = useState("");
-    const[password, setPassword] = useState("");
-    const[errors, setErrors] = useState({});
-    const[loading, setLoading] = useState(false);
-    const[apiResponse, setApiResponse] = useState({});
-    const[apiError, setApiError] = useState({});
+    const dispatch = useDispatch()
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+    const [apiResponse, setApiResponse] = useState({});
+    const [apiError, setApiError] = useState({});
 
     const navigate = useNavigate();
 
@@ -54,9 +58,9 @@ function Login() {
             password
         })
         .then((response) => {
- 
-            localStorage.setItem("token", response?.data?.loggedInUser?.accessToken)
-            localStorage.setItem("user", JSON.stringify(response?.data?.loggedInUser?.loggedInUser))
+
+            if(response?.data?.loggedInUser?.loggedInUser) dispatch(authLogin(response?.data?.loggedInUser?.loggedInUser))
+            
             setApiResponse(response);
             setEmail("");
             setPassword("");
