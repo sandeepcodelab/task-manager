@@ -1,25 +1,24 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
-export default function ProtectedRoute({children}){
 
+export default function ProtectedRoute({children, authentication = true}){
+
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
     const navigate = useNavigate();
-
-    const storedUser = localStorage.getItem("user")
-    const user = storedUser ? JSON.parse(storedUser) : null;
-    const [loder, setLoader] = useState(true);
+    const location = useLocation();
 
     useEffect(() => {
-        if(!user){
-            navigate("/login")
+        if(authentication && authentication !== isAuthenticated){
+            navigate("/login", { state: { from: location }, replace: true })
         }
-        else if(user){
-            navigate("/dashboard")
+        else if(!authentication && authentication !== isAuthenticated){
+            navigate(location.state?.from?.pathname || "/dashboard", {replace: true})
         }
-        setLoader(false)
 
-    }, [user])
+    }, [authentication, isAuthenticated, navigate])
 
-    return loder ? (<h1 className="text-3xl text-white font-bold mt-4">Loading...</h1>) : (children);
+    return children;
 
 }
