@@ -4,11 +4,13 @@ import Container from "../components/Container/Container";
 import axios from "axios";
 import { Link } from "react-router";
 import Button from "../components/Button";
+import { useSelector } from "react-redux";
+
 
 function Dashboard() {
 
-    const storedUser = localStorage.getItem("user")
-    const user = storedUser ? JSON.parse(storedUser) : {};
+    const user = useSelector((state) => state.auth.user)
+
     const [tasks, setTasks] = useState([])
     const [total, setTotal] = useState(0)
     const [pending, setPending] = useState(0)
