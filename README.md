@@ -37,11 +37,11 @@ This app allows users to **create, update, delete, and manage their personal tas
 ## ⚙️ Installation & Setup
 
 ### 1. Clone the Repository
-git clone https://github.com/sandeepcodelab/task-manager.git
+    git clone https://github.com/sandeepcodelab/task-manager.git
 
 ### 2. Setup Backend
-cd backend  
-npm install
+    cd backend  
+    npm install
 
 **Create a .env file in backend/ with:**
 
@@ -53,14 +53,14 @@ JWT_SECRET=your_jwt_secret
 
 **Start the server:**
 
-npm run dev     
+    npm run dev     
 
 
 ### 3. Setup Frontend   
 
-cd frontend     
-npm install     
-npm run dev     
+    cd frontend     
+    npm install     
+    npm run dev     
 
 --- 
 
