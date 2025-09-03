@@ -45,11 +45,11 @@ This app allows users to **create, update, delete, and manage their personal tas
 
 **Create a .env file in backend/ with:**
 
-cp .env.sample .env 
-
 PORT=5000   
 MONGO_URI=your_mongodb_connection_string    
 JWT_SECRET=your_jwt_secret  
+
+**check `.env.sample`** for details
 
 **Start the server:**
 
@@ -59,7 +59,9 @@ JWT_SECRET=your_jwt_secret
 ### 3. Setup Frontend   
 
     cd frontend     
+
     npm install     
+    
     npm run dev     
 
 --- 
