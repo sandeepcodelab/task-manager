@@ -73,7 +73,7 @@ JWT_SECRET=your_jwt_secret
 
 **Frontend**
 
-- npm start → Run frontend (React)
+- npm run dev → Run frontend (React)
 - npm run build → Build for production
 
 ---
