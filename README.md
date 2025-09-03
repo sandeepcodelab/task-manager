@@ -59,9 +59,7 @@ JWT_SECRET=your_jwt_secret
 ### 3. Setup Frontend   
 
     cd frontend     
-
     npm install     
-    
     npm run dev     
 
 --- 
